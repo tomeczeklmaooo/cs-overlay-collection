@@ -3,8 +3,8 @@
 body
 {
 	display: flex;
-	width: calc(100dvw - 16px);
-	height: calc(100dvh - 16px);
+	width: calc(100vw - 16px);
+	height: calc(100vh - 16px);
 	margin: 8px;
 	/* background-color: green;
 	background-image: url('https://media.dotesports.com/wp-content/uploads/2023/10/CS2-Mirage-Triple-Box.png');
