@@ -1,0 +1,512 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Staatliches&display=swap');
+
+body
+{
+	display: flex;
+	width: calc(100dvw - 16px);
+	height: calc(100dvh - 16px);
+	margin: 8px;
+	/* background-color: green;
+	background-image: url('https://media.dotesports.com/wp-content/uploads/2023/10/CS2-Mirage-Triple-Box.png');
+	background-size: cover; */
+	background: transparent;
+	font-family: 'Inter', sans-serif;
+	flex-direction: column;
+	justify-content: space-between;
+	/* align-items: center; */
+	color: #fefefe;
+	user-select: none;
+}
+
+/*
+ * TOP
+ */
+.top
+{
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	flex-direction: row;
+	align-items: flex-start;
+	/* margin-top: 8px; */
+	/* background-color: red; */
+}
+
+.top-section-left, .top-section-right
+{
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	width: calc((100% - 800px) / 2);
+	/* gap: 4px; */
+}
+
+.top-section-left
+{
+	align-items: flex-start;
+}
+
+.top-section-right
+{
+	align-items: flex-end;
+}
+
+.middle-bar-wrapper
+{
+	display: flex;
+	flex-direction: column;
+	font-family: 'Staatliches', sans-serif;
+}
+
+.middle-bar
+{
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	color: #fefefe;
+	align-items: center;
+	height: 48px;
+	gap: 8px;
+	width: 800px;
+	/* background-color: red; */
+	background-color: #0808089a;
+	flex-shrink: 0;
+	/* flex-grow: 0; */
+}
+
+.middle-bar-countdowns
+{
+	display: flex;
+	justify-content: space-between;
+}
+
+.countdown-wrapper
+{
+	overflow: hidden;
+	position: relative;
+	width: 274px;
+	height: 48px;
+}
+
+.middle-bar-defuse, .middle-bar-bombplant, .middle-bar-bomb
+{
+	width: 250px;
+	height: 48px;
+	background-color: #0808089a;
+	padding: 0 8px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	font-size: 14pt;
+	position: absolute;
+	transform: translateY(-100%);
+	transition: transform 0.3s ease-out;
+}
+
+.middle-bar-defuse
+{
+	border-left: 8px solid #6ab3e8;
+}
+
+.middle-bar-bombplant, .middle-bar-bomb
+{
+	border-right: 8px solid #eca766;
+}
+
+.tournament-bar
+{
+	width: 350px;
+	background-color: #080808d3;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 4px 0;
+	font-family: 'Staatliches', sans-serif;
+	font-size: 14pt;
+}
+
+.radar
+{
+	width: 350px;
+	height: 350px;
+	background-color: #0808089a;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.radar-img
+{
+	width: 100%;
+}
+
+.sponsor-clutch
+{
+	width: 200px;
+	height: 48px;
+	background-color: #0808089a;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 8px;
+	font-family: 'Staatliches', sans-serif;
+	font-size: 14pt;
+}
+
+.clutch-title
+{
+	font-size: 12pt;
+}
+
+.clutch-versus
+{
+	font-size: 16pt;
+}
+
+.sponsor-img
+{
+	width: 100%;
+	height: 100%;
+}
+
+.series-points
+{
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.series-square
+{
+	width: 16px;
+	height: 16px;
+	background-color: #8d8d8d;
+}
+
+.series-square-ct
+{
+	background-color: #6ab3e8;
+}
+
+.series-square-t
+{
+	background-color: #eca766;
+}
+
+.score
+{
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+	gap: 4px;
+	/* background-color: #0808089a; */
+}
+
+.middle-bar-mid
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	/* background-color: #0808089a; */
+	height: 100%;
+	width: 100px;
+}
+
+.round-counter
+{
+	font-family: 'Inter', sans-serif;
+	font-size: 10pt;
+	margin-top: 4px;
+}
+
+.round-timer
+{
+	font-size: 16pt;
+	margin-bottom: 4px;
+}
+
+.team
+{
+	font-size: 20pt;
+	/* background-color: #0808089a; */
+	display: flex;
+	height: 100%;
+	width: 250px;
+	align-items: center;
+	justify-content: center;
+
+}
+
+.team-left
+{
+	border-left: 8px solid #6ab3e8;
+	padding-left: 8px;
+}
+
+.team-right
+{
+	border-right: 8px solid #eca766;
+	padding-right: 8px;
+}
+
+.team-score
+{
+	width: 48px;
+	font-size: 20pt;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #080808a6;
+}
+
+/*
+ * MIDDLE
+ */
+.middle
+{
+	display: flex;
+	justify-content: flex-start;
+	width: 100%;
+	flex-direction: row;
+	align-items: flex-start;
+	/* margin-top: 8px; */
+	/* background-color: blue; */
+}
+
+.production
+{
+	width: 250px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	font-family: 'Staatliches', sans-serif;
+	font-size: 16pt;
+}
+
+.production-title
+{
+	background-color: #080808d3;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 2px 8px;
+}
+
+.production-content
+{
+	box-sizing: border-box;
+	background-color: #0808089a;
+	width: 100%;
+	padding: 2px 8px;
+	font-size: 14pt;
+}
+
+/*
+ * BOTTOM
+ */
+.bottom
+{
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	flex-direction: row;
+	align-items: flex-end;
+	/* margin-top: 8px; */
+	/* background-color: blue; */
+}
+
+.team-bottom
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-end;
+	gap: 8px;
+}
+
+.player-card
+{
+	width: 150px;
+	/* height: 130px; */
+	/* box-sizing: border-box; */
+	transition: 0.5s ease;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	border-top: 0px solid #fefefe;
+	font-family: 'Staatliches', sans-serif;
+}
+
+.player-ct
+{
+	background: #6ab3e8 !important;
+	/* border-bottom: 8px solid #6ab3e8; */
+}
+
+.player-t
+{
+	background: #eca766 !important;
+	/* border-bottom: 8px solid #eca766; */
+}
+
+.current-player
+{
+	width: 300px;
+	box-sizing: border-box;
+	font-family: 'Staatliches', sans-serif;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.current-player .player-name
+{
+	justify-content: center;
+	font-size: 18pt;
+}
+
+.current-player .player-stats
+{
+	justify-content: space-between;
+}
+
+.current-player .player-health
+{
+	gap: 16px;
+	background: none;
+}
+
+.current-player .player-ammo
+{
+	display: flex;
+	flex-direction: row;
+	gap: 8px;
+}
+
+.player-ammo .icon
+{
+	width: 24px;
+}
+
+.player-card-spectated
+{
+	/* background: linear-gradient(0deg, #fefefe, #00000000 75%);
+	background-color: #0808089a; */
+	border-top-width: 8px;
+}
+
+.player-card-dead
+{
+	opacity: 0.4;
+}
+
+.player-card-dead > .player-weapons, .player-card-dead > .player-health
+{
+	display: none;
+}
+
+.player-weapons
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+	background-color: #0808089a;
+	padding: 4px;
+}
+
+.grenades
+{
+	display: flex;
+	flex-direction: row;
+	gap: 8px;
+}
+
+.player-weapon-gun
+{
+	height: 20px;
+}
+
+.player-stats
+{
+	display: flex;
+	/* justify-content: space-between; */
+	flex-direction: row;
+	align-items: center;
+	background-color: #0808089a;
+	padding: 4px;
+	font-size: 14pt;
+}
+
+.kills, .deaths
+{
+	/* width: 40px; */
+	display: flex;
+	flex-direction: row;
+}
+
+.kills .icon, .kills .content, .deaths .icon, .deaths .content
+{
+	width: 20px;
+	text-align: center;
+}
+
+.money
+{
+	width: 70px;
+	text-align: right;
+}
+
+.player-health
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+	background-color: #0808089a;
+	padding: 4px;
+	font-size: 14pt;
+}
+
+.health, .armor
+{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 4px;
+}
+
+.health .icon, .armor .icon
+{
+	width: 16px;
+	height: 16px;
+	text-align: center;
+}
+
+.player-name
+{
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	align-items: center;
+	background-color: #0808089a;
+	padding: 4px;
+	font-size: 14pt;
+}
+
+.roundkills
+{
+	width: 20px;
+	height: 20px;
+	background-color: #fefefe;
+	color: #080808;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
