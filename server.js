@@ -2,10 +2,12 @@ const express = require('express');
 const http = require('http');
 const WebSocket = require('ws');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
+const port = 41079;
 
 let clients = [];
 
@@ -28,8 +30,22 @@ app.post('/', (req, res) => {
 	res.sendStatus(200);
 });
 
-app.use(express.static('public'));
+app.get('/hud', (req, res) => {
+	const timestamp = new Date();
+	res.sendFile(path.join(__dirname, 'public', 'hud.html'));
+	console.log(`[${timestamp.toLocaleTimeString('en-GB')}] GET: /hud -> hud.html`);
+});
 
-server.listen(41079, () => {
-	console.log('HUD server running on http://localhost:41079');
+app.get('/overlay', (req, res) => {
+	const timestamp = new Date();
+	res.sendFile(path.join(__dirname, 'public', 'overlay.html'));
+	console.log(`[${timestamp.toLocaleTimeString('en-GB')}] GET: /overlay -> overlay.html`);
+});
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+server.listen(port, () => {
+	console.log(`Server listening on http://localhost:${port}`);
+	console.log(`HUD available at http://localhost:${port}/hud`);
+	console.log(`Overlay available at http://localhost:${port}/overlay`);
 });

@@ -1,16 +1,28 @@
 {
   "name": "cs-overlay-collection",
   "version": "1.0.0",
-  "description": "",
+  "description": "`node.js`",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^2.2.0",
     "express": "^5.1.0",
     "ws": "^8.18.2"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomeczeklmaooo/cs-overlay-collection.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/tomeczeklmaooo/cs-overlay-collection/issues"
+  },
+  "homepage": "https://github.com/tomeczeklmaooo/cs-overlay-collection#readme"
 }

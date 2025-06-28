@@ -1,4 +1,9 @@
 const ws = new WebSocket(`ws://${location.host}`);
+
+// BEGIN CONFIG VARIABLES
+const radar_top_title = '';
+// END CONFIG VARIABLES
+
 let last_winner = null;
 let last_phase_start = null;
 let remaining_time = 0;
@@ -12,6 +17,8 @@ ws.onmessage = e => {
 	const t_R = ps.filter(p => p.team === 'T');
 	// const t_L = ps.filter(p => p.team === 'CT' && (!obs || p.observer_slot !== obs.observer_slot));
 	// const t_R = ps.filter(p => p.team === 'T' && (!obs || p.observer_slot !== obs.observer_slot));
+
+	document.getElementsByClassName('tournament-bar')[0].innerHTML = radar_top_title;
 
 	document.getElementsByClassName('radar')[0].innerHTML = `
 	<img src="./radars/ingame/${s.map.name}.png" alt="FL6_RADAR_OVERVIEW" class="radar-img">
