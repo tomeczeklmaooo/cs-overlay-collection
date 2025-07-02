@@ -28,7 +28,7 @@
 
 		<div class="right">
 			<div class="groups">
-				<div class="group">
+				<div class="group hidden">
 					<div class="group-title">Grupa A</div>
 					<table class="group-table">
 						<tr>
@@ -68,7 +68,7 @@
 						</tr>
 					</table>
 				</div>
-				<div class="group">
+				<div class="group hidden">
 					<div class="group-title">Grupa B</div>
 					<table class="group-table">
 						<tr>
@@ -117,30 +117,32 @@
 		const show_scores = true;
 
 		window.addEventListener('DOMContentLoaded', () => {
+			const groups = document.querySelectorAll('.group');
+			groups.forEach(group => {
+				group.classList.remove('hidden');
+			});
+
 			setTimeout(() => {
-				const match = document.querySelector('.match');
-				if (match)
-				{
-					const team_elem = match.querySelectorAll('.team, .team-score, .team-versus');
-					team_elem.forEach(elem => {
-						console.log(elem);
-						if (show_scores)
+				// const match = document.querySelector('.match');
+				const unhide = document.querySelectorAll('.team, .team-score, .team-versus');
+				unhide.forEach(elem => {
+					console.log(elem);
+					if (show_scores)
+					{
+						elem.classList.remove('hidden');
+					}
+					else
+					{
+						if (elem.classList.contains('team-score'))
 						{
-							elem.classList.remove('hidden');
+							console.log('SKIP XD');
 						}
 						else
 						{
-							if (elem.classList.contains('team-score'))
-							{
-								console.log('SKIP XD');
-							}
-							else
-							{
-								elem.classList.remove('hidden');
-							}
+							elem.classList.remove('hidden');
 						}
-					});
-				}
+					}
+				});
 			}, 2500);
 		});
 	</script>
