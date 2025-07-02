@@ -7,22 +7,22 @@
 	<link rel="stylesheet" href="style-break.css">
 </head>
 <body>
-	<video disablePictureInPicture="true" autoplay muted loop id="background-video">
+	<!-- <video disablePictureInPicture="true" autoplay muted loop id="background-video">
 		<source src="animated/background.mp4" type="video/mp4">
-	</video>
+	</video> -->
 
 	<main>
 		<div class="left">
 			<img src="https://media.discordapp.net/attachments/1295022960804892673/1387054977037635745/FL.png?ex=68667f1c&is=68652d9c&hm=49f326696971490ea3f9de23017508845f2d365abae83c9aebb8896a08009686&=&format=webp&quality=lossless&width=855&height=855" alt="FL6_FALCON_LOGO" class="falcon-logo">
 			<div class="tournament-stage">
-				Faza Grupowa
+				&nbsp;
 			</div>
 			<div class="match">
-				<div class="team hidden">TEAM SOLID</div>
-				<div class="team-score hidden">0</div>
+				<div class="team hidden" id="team-left-name">&nbsp;</div>
+				<div class="team-score hidden" id="team-left-score">&nbsp;</div>
 				<div class="team-versus hidden">VS</div>
-				<div class="team-score hidden">0</div>
-				<div class="team hidden">MILITI</div>
+				<div class="team-score hidden" id="team-right-score">&nbsp;</div>
+				<div class="team hidden" id="team-right-name">&nbsp;</div>
 			</div>
 		</div>
 
@@ -113,8 +113,26 @@
 	</main>
 
 	<script>
+		// ==================================
+		// ZMIENNE KONFIGURACYJNE
+		// ==================================
+		const tournament_stage = 'Faza Grupowa';
+		const team_left = {
+			name: 'Team Solid',
+			score: 0
+		};
+		const team_right = {
+			name: 'Militi',
+			score: 0
+		};
 		// CZY POKAZAĆ WYNIK MECZU
 		const show_scores = true;
+
+		 document.querySelector('.tournament-stage').textContent = tournament_stage;
+		 document.querySelector('#team-left-name').textContent = team_left.name;
+		 document.querySelector('#team-left-score').textContent = team_left.score;
+		 document.querySelector('#team-right-name').textContent = team_right.name;
+		 document.querySelector('#team-right-score').textContent = team_right.score;
 
 		window.addEventListener('DOMContentLoaded', () => {
 			const groups = document.querySelectorAll('.group');
