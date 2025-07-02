@@ -7,14 +7,10 @@
 	<link rel="stylesheet" href="style-break.css">
 </head>
 <body>
-	<!-- <video disablePictureInPicture="true" autoplay muted loop id="background-video">
-		<source src="animated/background.mp4" type="video/mp4">
-	</video> -->
-
 	<main>
 		<div class="left">
-			<img src="https://media.discordapp.net/attachments/1295022960804892673/1387054977037635745/FL.png?ex=68667f1c&is=68652d9c&hm=49f326696971490ea3f9de23017508845f2d365abae83c9aebb8896a08009686&=&format=webp&quality=lossless&width=855&height=855" alt="FL6_FALCON_LOGO" class="falcon-logo">
-			<div class="tournament-stage">
+			<img src="https://media.discordapp.net/attachments/1295022960804892673/1387054977037635745/FL.png?ex=68667f1c&is=68652d9c&hm=49f326696971490ea3f9de23017508845f2d365abae83c9aebb8896a08009686&=&format=webp&quality=lossless&width=855&height=855" alt="FL6_FALCON_LOGO" class="falcon-logo hidden">
+			<div class="tournament-stage hidden">
 				&nbsp;
 			</div>
 			<div class="match">
@@ -128,21 +124,37 @@
 		// CZY POKAZAĆ WYNIK MECZU
 		const show_scores = true;
 
-		 document.querySelector('.tournament-stage').textContent = tournament_stage;
-		 document.querySelector('#team-left-name').textContent = team_left.name;
-		 document.querySelector('#team-left-score').textContent = team_left.score;
-		 document.querySelector('#team-right-name').textContent = team_right.name;
-		 document.querySelector('#team-right-score').textContent = team_right.score;
+		// RODZAJ ZAWARTOŚCI
+		const is_test_broadcast = false;
+		const is_tech_pause = false;
+
+		if (is_test_broadcast)
+		{
+			document.querySelector('.left').style.width = '100%';
+			document.querySelector('.right').style.display = 'none';
+			document.querySelector('.tournament-stage').textContent = 'Transmisja testowa';
+			document.querySelector('.match').style.display = 'none';
+		}
+		else if (is_tech_pause)
+		{
+			document.querySelector('.left').style.width = '100%';
+			document.querySelector('.right').style.display = 'none';
+			document.querySelector('.tournament-stage').textContent = 'Przerwa techniczna';
+			document.querySelector('.match').style.display = 'none';
+		}
+		else
+		{
+			document.querySelector('.tournament-stage').textContent = tournament_stage;
+			document.querySelector('#team-left-name').textContent = team_left.name;
+			document.querySelector('#team-left-score').textContent = team_left.score;
+			document.querySelector('#team-right-name').textContent = team_right.name;
+			document.querySelector('#team-right-score').textContent = team_right.score;
+		}
 
 		window.addEventListener('DOMContentLoaded', () => {
-			const groups = document.querySelectorAll('.group');
-			groups.forEach(group => {
-				group.classList.remove('hidden');
-			});
-
 			setTimeout(() => {
 				// const match = document.querySelector('.match');
-				const unhide = document.querySelectorAll('.team, .team-score, .team-versus');
+				const unhide = document.querySelectorAll('.team, .team-score, .team-versus, .tournament-stage, .falcon-logo, .group');
 				unhide.forEach(elem => {
 					console.log(elem);
 					if (show_scores)
@@ -151,17 +163,13 @@
 					}
 					else
 					{
-						if (elem.classList.contains('team-score'))
-						{
-							console.log('SKIP XD');
-						}
-						else
+						if (!elem.classList.contains('team-score'))
 						{
 							elem.classList.remove('hidden');
 						}
 					}
 				});
-			}, 2500);
+			}, 1000);
 		});
 	</script>
 </body>
