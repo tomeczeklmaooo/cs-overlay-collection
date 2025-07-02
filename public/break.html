@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>FL6_BREAK_SCENE</title>
+	<link rel="stylesheet" href="style-break.css">
+</head>
+<body>
+	<video autoplay muted loop id="background-video">
+		<source src="animated/background.mp4" type="video/mp4">
+	</video>
+
+	<main>
+		<div class="left">
+			<img src="https://media.discordapp.net/attachments/1295022960804892673/1387054977037635745/FL.png?ex=68667f1c&is=68652d9c&hm=49f326696971490ea3f9de23017508845f2d365abae83c9aebb8896a08009686&=&format=webp&quality=lossless&width=855&height=855" alt="FL6_FALCON_LOGO" class="falcon-logo">
+			<div class="tournament-stage">
+				Faza Grupowa
+			</div>
+			<div class="match">
+				<div class="team hidden">TEAM SOLID</div>
+				<div class="team-score hidden">0</div>
+				<div class="team-versus hidden">VS</div>
+				<div class="team-score hidden">0</div>
+				<div class="team hidden">MILITI</div>
+			</div>
+		</div>
+
+		<div class="right">
+			<div class="groups">
+				<div class="group">
+					<div class="group-title">Grupa A</div>
+					<table class="group-table">
+						<tr>
+							<th>&nbsp;</th>
+							<th>W</th>
+							<th>D</th>
+							<th>L</th>
+							<th>PTS</th>
+						</tr>
+						<tr>
+							<td>Pest E-sport</td>
+							<td>3</td>
+							<td>0</td>
+							<td>0</td>
+							<td>9</td>
+						</tr>
+						<tr>
+							<td>Militi</td>
+							<td>1</td>
+							<td>0</td>
+							<td>1</td>
+							<td>3</td>
+						</tr>
+						<tr>
+							<td>Technopol</td>
+							<td>0</td>
+							<td>1</td>
+							<td>1</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>Office365</td>
+							<td>0</td>
+							<td>1</td>
+							<td>2</td>
+							<td>1</td>
+						</tr>
+					</table>
+				</div>
+				<div class="group">
+					<div class="group-title">Grupa B</div>
+					<table class="group-table">
+						<tr>
+							<th>&nbsp;</th>
+							<th>W</th>
+							<th>D</th>
+							<th>L</th>
+							<th>PTS</th>
+						</tr>
+						<tr>
+							<td>Pest E-sport</td>
+							<td>3</td>
+							<td>0</td>
+							<td>0</td>
+							<td>9</td>
+						</tr>
+						<tr>
+							<td>Militi</td>
+							<td>1</td>
+							<td>0</td>
+							<td>1</td>
+							<td>3</td>
+						</tr>
+						<tr>
+							<td>Technopol</td>
+							<td>0</td>
+							<td>1</td>
+							<td>1</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<td>Office365</td>
+							<td>0</td>
+							<td>1</td>
+							<td>2</td>
+							<td>1</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<script>
+		// CZY POKAZAĆ WYNIK MECZU
+		const show_scores = true;
+
+		window.addEventListener('DOMContentLoaded', () => {
+			setTimeout(() => {
+				const match = document.querySelector('.match');
+				if (match)
+				{
+					const team_elem = match.querySelectorAll('.team, .team-score, .team-versus');
+					team_elem.forEach(elem => {
+						console.log(elem);
+						if (show_scores)
+						{
+							elem.classList.remove('hidden');
+						}
+						else
+						{
+							if (elem.classList.contains('team-score'))
+							{
+								console.log('SKIP XD');
+							}
+							else
+							{
+								elem.classList.remove('hidden');
+							}
+						}
+					});
+				}
+			}, 2500);
+		});
+	</script>
+</body>
+</html>

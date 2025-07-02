@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Staatliches&display=swap');
+
+body
+{
+	display: flex;
+	width: 100vw;
+	height: 100vh;
+	margin: 0;
+	background: transparent;
+	font-family: 'Staatliches', sans-serif;
+	flex-direction: row;
+	color: #080808;
+	user-select: none;
+	background-color: blue;
+}
+
+#background-video
+{
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	min-width: 100%;
+	min-height: 100%;
+}
+
+main
+{
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: row;
+}
+
+.left
+{
+	width: 60%;
+	height: 100%;
+	display: flex;
+	background-color: #080808a2;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	backdrop-filter: blur(8px);
+	color: #fefefe;
+	gap: 4px;
+}
+
+.falcon-logo
+{
+	width: 400px;
+	height: 400px;
+}
+
+.tournament-stage
+{
+	font-size: 48pt;
+}
+
+.match
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	margin-top: 32px;
+	font-size: 32pt;
+	width: 100%;
+	padding: 16px;
+	box-sizing: border-box;
+	clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+	transition: clip-path 0.5s ease;
+	pointer-events: none;
+	gap: 8px;
+}
+
+.team, .team-score
+{
+	background-color: #fefefe;
+	color: #080808;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+	transition: clip-path 0.5s ease;
+}
+
+.hidden
+{
+	clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+}
+
+.team
+{
+	width: 420px;
+}
+
+.team-versus
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 50px;
+	width: 50px;
+}
+
+.team-score
+{
+	width: 50px;
+}
+
+.right
+{
+	width: 40%;
+	height: 100%;
+	display: flex;
+	background-color: #080808a2;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	backdrop-filter: blur(8px);
+	color: #fefefe;
+	gap: 4px;
+}
+
+.groups
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 64px;
+}
+
+.group
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.group-title
+{
+	font-size: 24pt;
+}
+
+.group-table
+{
+	border-collapse: collapse;
+	font-size: 18pt;
+}
+
+th
+{
+	padding: 4px 16px;
+}
+
+tr
+{
+	border-bottom: 1px dashed #fefefe92;
+}
+
+tr:nth-last-child(1)
+{
+	border-bottom: none;
+}
+
+td
+{
+	padding: 4px 16px;
+	border-left: 1px solid #fefefe92;
+	width: 20px;
+	text-align: center;
+}
+
+td:nth-child(1)
+{
+	border-left: none;
+	width: 200px;
+}
