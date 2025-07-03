@@ -69,7 +69,7 @@ body
 	gap: 8px;
 	width: 800px;
 	/* background-color: red; */
-	background-color: #0808089a;
+	background-color: #080808d3;
 	flex-shrink: 0;
 	/* flex-grow: 0; */
 }
@@ -92,7 +92,7 @@ body
 {
 	width: 250px;
 	height: 48px;
-	background-color: #0808089a;
+	background-color: #080808d3;
 	padding: 0 8px;
 	display: flex;
 	flex-direction: column;
@@ -141,7 +141,7 @@ body
 .tournament-bar
 {
 	width: 350px;
-	background-color: #080808d3;
+	background-color: #080808ec;
 	box-sizing: border-box;
 	display: flex;
 	justify-content: center;
@@ -155,7 +155,7 @@ body
 {
 	width: 350px;
 	height: 350px;
-	background-color: #0808089a;
+	background-color: #080808d3;
 	box-sizing: border-box;
 	display: flex;
 	justify-content: center;
@@ -171,7 +171,7 @@ body
 {
 	width: 200px;
 	height: 48px;
-	background-color: #0808089a;
+	background-color: #080808d3;
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
@@ -264,7 +264,6 @@ body
 	width: 250px;
 	align-items: center;
 	justify-content: center;
-
 }
 
 .team-left
@@ -328,7 +327,7 @@ body
 
 .production-title
 {
-	background-color: #080808d3;
+	background-color: #080808ec;
 	width: 100%;
 	box-sizing: border-box;
 	padding: 2px 8px;
@@ -337,7 +336,7 @@ body
 .production-content
 {
 	box-sizing: border-box;
-	background-color: #0808089a;
+	background-color: #080808d3;
 	width: 100%;
 	padding: 2px 8px;
 	font-size: 14pt;
@@ -453,7 +452,7 @@ body
 	justify-content: space-between;
 	align-items: center;
 	flex-direction: row;
-	background-color: #0808089a;
+	background-color: #080808d3;
 	padding: 4px;
 }
 
@@ -475,7 +474,7 @@ body
 	/* justify-content: space-between; */
 	flex-direction: row;
 	align-items: center;
-	background-color: #0808089a;
+	background-color: #080808d3;
 	padding: 4px;
 	font-size: 14pt;
 }
@@ -505,7 +504,7 @@ body
 	justify-content: space-between;
 	align-items: center;
 	flex-direction: row;
-	background-color: #0808089a;
+	background-color: #080808d3;
 	padding: 4px;
 	font-size: 14pt;
 }
@@ -531,7 +530,7 @@ body
 	justify-content: space-between;
 	flex-direction: row;
 	align-items: center;
-	background-color: #0808089a;
+	background-color: #080808d3;
 	padding: 4px;
 	font-size: 14pt;
 	height: 32px;

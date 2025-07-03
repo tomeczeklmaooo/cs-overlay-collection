@@ -1,7 +1,7 @@
 const ws = new WebSocket(`ws://${location.host}`);
 
 // BEGIN CONFIG VARIABLES
-const radar_top_title = '';
+const radar_top_title = 'Falcon League 6 &ndash; Grupa A';
 // END CONFIG VARIABLES
 
 let last_winner = null;
