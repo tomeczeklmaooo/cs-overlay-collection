@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>FL6_CONFIG_PANEL</title>
+	<link rel="stylesheet" href="style-panel.css">
+</head>
+<body>
+	<header>
+		<h1>Falcon League Overlay Configuration Panel</h1>
+	</header>
+
+	<main>
+		<div class="input-single">
+			<label for="tournament-name">Nazwa turnieju:&emsp;</label>
+			<input type="text" id="tournament-name">
+		</div>
+
+		<div class="input-single">
+			<label for="tournament-stage">Faza turnieju (np. "Faza Grupowa", "Playoffs"):&emsp;</label>
+			<input type="text" id="tournament-stage">
+		</div>
+
+		<div class="input-single">
+			<label for="team-name-left">Nazwa drużyny CT (np. "Militi"):&emsp;</label>
+			<input type="text" id="team-name-left">
+		</div>
+
+		<div class="input-single">
+			<label for="team-name-right">Nazwa drużyny T (np. "Diavolo Loco"):&emsp;</label>
+			<input type="text" id="team-name-right">
+		</div>
+
+		<div class="input-single">
+			<label for="show-scores">Pokazać obecny wynik przy nazwach drużyn? (tylko <code>/break</code>)&emsp;</label>
+			<input type="checkbox" id="show-scores">
+		</div>
+
+		<div class="input-multiple">
+			<label for="group-standings-a">Wyniki grupy A:&emsp;</label>
+			<input type="text" id="group-standings-a" value="Tabelka grupy A" disabled>
+		</div>
+
+		<div class="input-multiple">
+			<label for="group-standings-b">Wyniki grupy B:&emsp;</label>
+			<input type="text" id="group-standings-b" value="Tabelka grupy B" disabled>
+		</div>
+
+		<div class="input-single">
+			<label for="break-scene-type">Rodzaj sceny <code>/break</code>:&emsp;</label>
+			<select id="break-scene-type">
+				<option value="break" selected>break</option>
+				<option value="tech_pause">tech_pause</option>
+				<option value="test_broadcast">test_broadcast</option>
+			</select>
+		</div>
+	</main>
+
+	<footer>
+		<h4>Made with ❤️ by toaster</h4>
+	</footer>
+
+	<script>
+		const tournament_name = '';     // INPUT/STRING
+		const tournament_stage = '';    // INPUT/STRING
+		const team_name_left = '';      // INPUT/STRING
+		const team_name_right = '';     // INPUT/STRING
+		const show_scores = '';         // SELECT/BOOLEAN: true, false
+		const group_standings_a = [
+			{ name: '', win: 0, draw: 0, loss: 0, points: 0 },
+			{ name: '', win: 0, draw: 0, loss: 0, points: 0 },
+			{ name: '', win: 0, draw: 0, loss: 0, points: 0 },
+			{ name: '', win: 0, draw: 0, loss: 0, points: 0 }
+		];                              // INPUT_GROUP/STRING-INT-INT-INT-INT
+		const group_standings_b = [
+			{ name: '', win: 0, draw: 0, loss: 0, points: 0 },
+			{ name: '', win: 0, draw: 0, loss: 0, points: 0 },
+			{ name: '', win: 0, draw: 0, loss: 0, points: 0 },
+			{ name: '', win: 0, draw: 0, loss: 0, points: 0 }
+		];                              // INPUT_GROUP/STRING-INT-INT-INT-INT
+		const break_scene_type = '';    // SELECT/STRING: break, test_broadcast, tech_pause
+	</script>
+</body>
+</html>

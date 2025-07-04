@@ -42,10 +42,17 @@ app.get('/break', (req, res) => {
 	console.log(`[${timestamp.toLocaleTimeString('en-GB')}] GET: /break -> break.html`);
 });
 
+app.get('/panel', (req, res) => {
+	const timestamp = new Date();
+	res.sendFile(path.join(__dirname, 'public', 'panel.html'));
+	console.log(`[${timestamp.toLocaleTimeString('en-GB')}] GET: /panel -> panel.html`);
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 server.listen(port, () => {
 	console.log(`Server listening on http://localhost:${port}`);
 	console.log(`HUD available at http://localhost:${port}/hud`);
 	console.log(`Break scene available at http://localhost:${port}/break`);
+	console.log(`Configuration panel available at http://localhost:${port}/panel`);
 });
