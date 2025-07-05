@@ -16,6 +16,7 @@ body
 	/* align-items: center; */
 	color: #fefefe;
 	user-select: none;
+	pointer-events: none;
 }
 
 /*
