@@ -91,8 +91,8 @@ body
 
 .middle-bar-defuse, .middle-bar-bombplant, .middle-bar-bomb
 {
-	width: 250px;
-	height: 48px;
+	width: 258px;
+	height: 12px;
 	background-color: #080808d3;
 	padding: 0 8px;
 	display: flex;
@@ -102,11 +102,11 @@ body
 	text-align: center;
 	font-size: 14pt;
 	position: absolute;
-	transform: translateY(-100%);
+	/* transform: translateY(-100%); */
 	transition: transform 0.3s ease-out;
 }
 
-.middle-bar-defuse
+/* .middle-bar-defuse
 {
 	border-left: 8px solid #6ab3e8;
 }
@@ -114,12 +114,12 @@ body
 .middle-bar-bombplant, .middle-bar-bomb
 {
 	border-right: 8px solid #eca766;
-}
+} */
 
 .progress-container
 {
 	width: 100%;
-	height: 8px;
+	height: 100%;
 	background: #333;
 	overflow: hidden;
 	margin-top: 2px;
