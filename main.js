@@ -16,7 +16,8 @@ function create_window()
 		alwaysOnTop: true,
 		resizable: false,
 		fullscreenable: false,
-		skipTaskbar: true,
+		skipTaskbar: false,
+		focusable: false,
 		webPreferences: {
 			nodeIntegration: true,
 			contextIsolation: true
