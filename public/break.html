@@ -109,6 +109,8 @@
 	</main>
 
 	<script>
+		const params = new URLSearchParams(window.location.search);
+
 		// ==================================
 		// ZMIENNE KONFIGURACYJNE
 		// ==================================
@@ -125,8 +127,8 @@
 		const show_scores = true;
 
 		// RODZAJ ZAWARTOŚCI
-		const is_test_broadcast = false;
-		const is_tech_pause = false;
+		const is_test_broadcast = params.has('test_broadcast');
+		const is_tech_pause = params.has('tech_pause');
 
 		if (is_test_broadcast)
 		{
@@ -169,7 +171,7 @@
 						}
 					}
 				});
-			}, 2500);
+			}, 2000);
 		});
 	</script>
 </body>
