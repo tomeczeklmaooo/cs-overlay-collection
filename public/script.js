@@ -161,8 +161,9 @@ ws.onmessage = e => {
 		let dot = document.getElementById(`dot-${id}`);
 		// const slot = player_slot_numbers[id] ?? '?';
 		const slot = typeof p.observer_slot === 'number'
-					? ((p.observer_slot + 1) % 10).toString()
+					? (p.observer_slot === 9 ? '0' : (p.observer_slot + 1).toString())
 					: '?';
+		// const slot = p.observer_slot;
 		// slot = slot === 10 ? 0 : slot;
 
 		if (!dot)
