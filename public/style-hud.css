@@ -161,12 +161,35 @@ body
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	position: relative;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	/* overflow: hidden; */
 }
 
-.radar-img
+.radar-dot
+{
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	border-radius: 50%;
+	font-size: 10pt;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: 'Staatliches', sans-serif;
+	transform: translate(-50%, -50%);
+	z-index: 10;
+}
+
+/* .radar-img
 {
 	width: 100%;
-}
+	position: relative;
+	object-fit: contain;
+	z-index: 1;
+} */
 
 .sponsor-clutch
 {
@@ -214,12 +237,12 @@ body
 	background-color: #8d8d8d;
 }
 
-.series-square-ct
+.ct
 {
 	background-color: #6ab3e8;
 }
 
-.series-square-t
+.t
 {
 	background-color: #eca766;
 }
@@ -467,6 +490,11 @@ body
 .player-weapon-gun
 {
 	height: 20px;
+}
+
+.player-weapon-gun.dimmed
+{
+	opacity: 0.35;
 }
 
 .player-stats

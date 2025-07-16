@@ -1,4 +1,4 @@
-const ws = new WebSocket(`ws://${location.host}`);
+const ws = new WebSocket(`ws://localhost:41079`);
 
 // BEGIN CONFIG VARIABLES
 const radar_top_title = 'Falcon League 6 &ndash; Grupa A';
@@ -9,9 +9,96 @@ let last_phase_start = null;
 let remaining_time = 0;
 let round_phase = null;
 
+const MAP_CONFIG = {
+	ar_baggage:       { pos_x: -1316, pos_y: 1288, scale: 2.539062 },
+	ar_shoots:        { pos_x: -1368, pos_y: 1952, scale: 2.687500 },
+	cs_italy:         { pos_x: -2647, pos_y: 2592, scale: 4.6 },
+	cs_office:        { pos_x: -1838, pos_y: 1858, scale: 4.1 },
+	de_ancient:       { pos_x: -2953, pos_y: 2164, scale: 5 },
+	de_anubis:        { pos_x: -2796, pos_y: 3328, scale: 5.22 },
+	de_dust:          { pos_x: -2850, pos_y: 4073, scale: 6 },
+	de_dust2:         { pos_x: -2476, pos_y: 3239, scale: 4.4 },
+	de_inferno:       { pos_x: -2087, pos_y: 3870, scale: 4.9 },
+	de_inferno_s2:    { pos_x: -2087, pos_y: 3870, scale: 4.9 },
+	de_mirage:        { pos_x: -3230, pos_y: 1713, scale: 5 },
+	de_nuke:          { pos_x: -3453, pos_y: 2887, scale: 7 },
+	de_overpass:      { pos_x: -4831, pos_y: 1781, scale: 5.2 },
+	de_overpass_2v2:  { pos_x: -4831, pos_y: 1781, scale: 5.2 },
+	de_train:         { pos_x: -2308, pos_y: 2078, scale: 4.082077 },
+	de_vertigo:       { pos_x: -3168, pos_y: 1762, scale: 4 }
+};
+
+const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
+
+function world_to_radar(x, y, map_config, radar_width, radar_height)
+{
+	const dx = x - map_config.pos_x;
+	const dy = map_config.pos_y - y; // flipped Y axis
+	console.log(`dx=${dx} dy=${dy}`);
+
+	const full_map_pixel_size = 1024;
+	const display_scale = map_config.scale * (full_map_pixel_size / radar_width);
+
+	const pixelX = (radar_width / 2 + dx / display_scale) - (radar_width / 2);
+	const pixelY = (radar_height / 2 + dy / display_scale) - (radar_height / 2);
+	console.log(`x=${pixelX} y=${pixelY}`);
+
+
+	return { x: pixelX, y: pixelY };
+}
+
+function get_best_weapon_and_grenades(weapons)
+{
+	const priority = ['Rifle', 'SniperRifle', 'SMG', 'Shotgun', 'Pistol', 'Knife'];
+	const grenade_priority = ['molotov', 'incgrenade', 'smokegrenade', 'flashbang', 'hegrenade'];
+
+	let best_weapon = null;
+	let best_priority = Infinity;
+	let grenades = [];
+
+	for (const key in weapons)
+	{
+		const w = weapons[key];
+		if (!w || !w.name || !w.type) continue;
+
+		if (w.type === 'Grenade')
+		{
+			grenades.push(w.name);
+		}
+		else
+		{
+			const prio = priority.indexOf(w.type);
+			if (prio !== -1 && prio < best_priority)
+			{
+				best_priority = prio;
+				best_weapon = w.name;
+			}
+		}
+	}
+
+	grenades.sort((a, b) => {
+		const ia = grenade_priority.findIndex(g => a.toLowerCase().includes(g));
+		const ib = grenade_priority.findIndex(g => b.toLowerCase().includes(g));
+		return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+	});
+
+	return { best_weapon, grenades };
+}
+
+function get_weapon_icon_path(weapon)
+{
+	const name = weapon.replace(/^weapon_/, '');
+	return `./weapons/${name}.svg`;
+}
+
 ws.onmessage = e => {
 	const s = JSON.parse(e.data);
 	const ps = Object.values(s.allplayers || {});
+
+	ps.forEach(p => {
+		console.log(`Player ${p.name} - SteamID: ${p.steamid} - ObsSlot: ${p.observer_slot}`);
+	});
+
 	const obs = ps.find(p => p.observer_slot == s.player?.observer_slot);
 	const t_L = ps.filter(p => p.team === 'CT');
 	const t_R = ps.filter(p => p.team === 'T');
@@ -20,9 +107,10 @@ ws.onmessage = e => {
 
 	document.getElementsByClassName('tournament-bar')[0].innerHTML = radar_top_title;
 
-	document.getElementsByClassName('radar')[0].innerHTML = `
-	<img src="./radars/ingame/${s.map.name}.png" alt="FL6_RADAR_OVERVIEW" class="radar-img">
-	`;
+	// document.getElementsByClassName('radar')[0].innerHTML = `
+	// <img src="./radars/ingame/${s.map.name}.png" alt="FL6_RADAR_OVERVIEW" class="radar-img">
+	// `;
+	document.getElementsByClassName('radar')[0].style.backgroundImage = `url('./radars/ingame/${s.map.name}.png')`;
 
 	['team-left', 'team-right'].forEach(id => {
 		document.getElementById(id).innerHTML = (id === 'team-left' ? t_L : t_R)
@@ -40,25 +128,56 @@ ws.onmessage = e => {
 	<div class="series-square"></div>
 	`;
 
-	// hardcode them idc
-	// for (let i = 0; i < s.map?.num_matches_to_win_series; i++)
-	// {
-	// 	document.getElementById('team-left-series').innerHTML += `
-	// 	<div class="series-square"></div>
-	// 	`;
-	// 	document.getElementById('team-right-series').innerHTML += `
-	// 	<div class="series-square"></div>
-	// 	`;
-	// }
+	const radar = document.querySelector('.radar');
+	const radar_width = radar.clientWidth;
+	const radar_height = radar.clientHeight;
+	console.log(`radar_width=${radar_width} radar_height=${radar_height}`);
 
-	// for (let i = 0; i < s.map?.team_ct?.matches_won_this_series; i++)
-	// {
-	// 	document.getElementsByClassName('series-square')[i].classList.add('series-square-ct');
-	// }
-	// for (let i = 0; i < s.map?.team_t?.matches_won_this_series; i++)
-	// {
-	// 	document.getElementsByClassName('series-square')[i].classList.add('series-square-t');
-	// }
+	// const player_slot_numbers = {};
+	// [t_L, t_R].forEach(team => {
+	// 	team
+	// 		.filter(p => typeof p.observer_slot === 'number')
+	// 		.sort((a, b) => a.observer_slot - b.observer_slot)
+	// 		.forEach((p, index) => {
+	// 			const player_entry = Object.entries(s.allplayers).find(([id, val]) => val === p);
+	// 			if (player_entry)
+	// 			{
+	// 				const [id] = player_entry;
+	// 				player_slot_numbers[id] = index + 1;
+	// 			}
+	// 		});
+	// });
+
+	const cfg = MAP_CONFIG[s.map.name];
+	if (!cfg) return;
+
+	document.querySelectorAll('.radar-dot').forEach(dot => dot.remove());
+	for (const id in s.allplayers)
+	{
+		const p = s.allplayers[id];
+		const [wx, wy] = p.position.split(',').map(parseFloat);
+		const { x, y } = world_to_radar(wx, wy, cfg, radar_width, radar_height);
+
+		let dot = document.getElementById(`dot-${id}`);
+		// const slot = player_slot_numbers[id] ?? '?';
+		const slot = typeof p.observer_slot === 'number'
+					? ((p.observer_slot + 1) % 10).toString()
+					: '?';
+		// slot = slot === 10 ? 0 : slot;
+
+		if (!dot)
+		{
+			dot = document.createElement('div');
+			dot.id = `dot-${id}`;
+			radar.appendChild(dot);
+		}
+
+		dot.className = p.team === 'CT' ? 'radar-dot ct' : 'radar-dot t';
+		dot.textContent = slot;
+		dot.style.left = `${x}px`;
+		dot.style.top = `${y}px`;
+		console.log(`${p.name} → observer_slot=${p.observer_slot} → label=${slot}`);
+	}
 
 	const rnd = (s.map?.round || 0) + 1;
 	document.getElementsByClassName('round-counter')[0].textContent = `Runda ${rnd}/24`;
@@ -111,8 +230,17 @@ function render_player(p, is_spectated = false)
 {
 	const dead = p.state.health <= 0;
 	const spec = is_spectated ? 'player-card-spectated' : '';
-	const w = p.state.weapon?.name || '';
-	// const icon = w.includes
+	
+	const { best_weapon, grenades } = get_best_weapon_and_grenades(p.weapons || {});
+
+	const weapons = Object.values(p.weapons || {});
+	const active_weapon = weapons.find(w => w.state === 'active');
+	const is_active = active_weapon?.name === best_weapon;
+	const dim_class = is_active ? '' : 'dimmed';
+
+	const best_weapon_icon = best_weapon ? `<img src="${get_weapon_icon_path(best_weapon)}" alt="FL6_PLAYER_GUN" class="player-weapon-gun ${dim_class}">` : '';
+	const grenade_icons = grenades.map(g => `<img src="${get_weapon_icon_path(g)}" alt="FL6_PLAYER_GRENADE" class="player-weapon-gun">`).join('');
+
 	return `
 	<div class="player-card ${dead ? 'player-card-dead' : ''} ${spec}">
 		<div class="player-name">
@@ -143,12 +271,9 @@ function render_player(p, is_spectated = false)
 			</div>
 		</div>
 		<div class="player-weapons">
-			<img src="https://raw.githubusercontent.com/drweissbrot/cs-hud/56870aee627ae2d247fa36abd308795c4e6e1e02/src/themes/fennec/img/weapons/ak47.svg" alt="FL6_PLAYER_GUN" class="player-weapon-gun">
+			${best_weapon_icon}
 			<div class="grenades">
-				<img src="https://raw.githubusercontent.com/drweissbrot/cs-hud/56870aee627ae2d247fa36abd308795c4e6e1e02/src/themes/fennec/img/weapons/frag_grenade.svg" alt="FL6_PLAYER_GRENADE" class="player-weapon-gun">
-				<img src="https://raw.githubusercontent.com/drweissbrot/cs-hud/56870aee627ae2d247fa36abd308795c4e6e1e02/src/themes/fennec/img/weapons/flashbang.svg" alt="FL6_PLAYER_GRENADE" class="player-weapon-gun">
-				<img src="https://raw.githubusercontent.com/drweissbrot/cs-hud/56870aee627ae2d247fa36abd308795c4e6e1e02/src/themes/fennec/img/weapons/smokegrenade.svg" alt="FL6_PLAYER_GRENADE" class="player-weapon-gun">
-				<img src="https://raw.githubusercontent.com/drweissbrot/cs-hud/56870aee627ae2d247fa36abd308795c4e6e1e02/src/themes/fennec/img/weapons/firebomb.svg" alt="FL6_PLAYER_GRENADE" class="player-weapon-gun">
+				${grenade_icons}
 			</div>
 		</div>
 	</div>
