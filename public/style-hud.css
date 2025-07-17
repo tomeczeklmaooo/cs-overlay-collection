@@ -59,6 +59,52 @@ body
 	font-family: 'Staatliches', sans-serif;
 }
 
+.timer-wrapper
+{
+	position: relative;
+	margin-top: 8px;
+}
+
+.bomb-timer-bar-wrapper
+{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 50%;
+	height: 8px;
+	background-color: transparent;
+}
+
+.bomb-timer
+{
+	background-color: red;
+	height: 100%;
+	width: 0;
+}
+
+.defuse-timer-bar-wrapper
+{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 50%;
+	height: 8px;
+	background-color: transparent;
+}
+
+.defuse-timer
+{
+	background-color: dodgerblue;
+	height: 100%;
+	width: 0;
+}
+
+.bomb-timer, .defuse-timer
+{
+	transition: width 0.3s linear, opacity 0.3s ease-in-out;
+	opacity: 0;
+}
+
 .middle-bar
 {
 	box-sizing: border-box;
@@ -73,70 +119,6 @@ body
 	background-color: #080808d3;
 	flex-shrink: 0;
 	/* flex-grow: 0; */
-}
-
-.middle-bar-countdowns
-{
-	display: flex;
-	justify-content: space-between;
-}
-
-.countdown-wrapper
-{
-	overflow: hidden;
-	position: relative;
-	width: 274px;
-	height: 48px;
-}
-
-.middle-bar-defuse, .middle-bar-bombplant, .middle-bar-bomb
-{
-	width: 258px;
-	height: 12px;
-	background-color: #080808d3;
-	padding: 0 8px;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	font-size: 14pt;
-	position: absolute;
-	/* transform: translateY(-100%); */
-	transition: transform 0.3s ease-out;
-}
-
-/* .middle-bar-defuse
-{
-	border-left: 8px solid #6ab3e8;
-}
-
-.middle-bar-bombplant, .middle-bar-bomb
-{
-	border-right: 8px solid #eca766;
-} */
-
-.progress-container
-{
-	width: 100%;
-	height: 100%;
-	background: #333;
-	overflow: hidden;
-	margin-top: 2px;
-}
-
-.progress
-{
-	height: 100%;
-	width: 0%;
-	background: #6ab3e8;
-	transition: width linear;
-}
-
-.timer
-{
-	font-size: 10pt;
-	margin-top: 2px;
 }
 
 .tournament-bar
@@ -574,4 +556,15 @@ body
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+
+
+
+
+
+
+.hidden
+{
+	display: none;
 }

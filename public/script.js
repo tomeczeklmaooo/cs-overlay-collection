@@ -49,7 +49,7 @@ function world_to_radar(x, y, map_config, radar_width, radar_height)
 
 function get_best_weapon_and_grenades(weapons)
 {
-	const priority = ['Rifle', 'SniperRifle', 'SMG', 'Shotgun', 'Pistol', 'Knife'];
+	const priority = ['Rifle', 'SniperRifle', 'Submachine Gun', 'Shotgun', 'Pistol', 'Knife'];
 	const grenade_priority = ['molotov', 'incgrenade', 'smokegrenade', 'flashbang', 'hegrenade'];
 
 	let best_weapon = null;
@@ -59,6 +59,7 @@ function get_best_weapon_and_grenades(weapons)
 	for (const key in weapons)
 	{
 		const w = weapons[key];
+
 		if (!w || !w.name || !w.type) continue;
 
 		if (w.type === 'Grenade')
@@ -68,6 +69,7 @@ function get_best_weapon_and_grenades(weapons)
 		else
 		{
 			const prio = priority.indexOf(w.type);
+
 			if (prio !== -1 && prio < best_priority)
 			{
 				best_priority = prio;
@@ -90,6 +92,10 @@ function get_weapon_icon_path(weapon)
 	const name = weapon.replace(/^weapon_/, '');
 	return `./weapons/${name}.svg`;
 }
+
+let defuse_start_time = null;
+let last_bomb_state = null;
+let last_has_kit = false;
 
 ws.onmessage = e => {
 	const s = JSON.parse(e.data);
@@ -183,40 +189,61 @@ ws.onmessage = e => {
 	const rnd = (s.map?.round || 0) + 1;
 	document.getElementsByClassName('round-counter')[0].textContent = `Runda ${rnd}/24`;
 
-	// last_phase_start = (s.provider?.timestamp || Date.now() / 1000) * 1000;
-	// round_phase = s.round?.phase || 'live';
+	const bomb_timer_bar = document.querySelector('.bomb-timer');
+	const defuse_timer_bar = document.querySelector('.defuse-timer');
 
-	const new_phase = s.round?.phase || 'live';
-	const new_time = parseFloat(s.phase_countdowns?.phase_ends_in || 0);
-	const server_time = (s.provider?.timestamp || Date.now() / 1000) * 1000;
-	// round_phase = s.phase_countdowns?.phase || s.round?.phase || 'live';
-	// remaining_time = parseFloat(phase_ends_in || 0);
-	if (new_phase !== round_phase || Math.abs(new_time - remaining_time) > 1)
+	// bomb_timer_bar.classList.add('hidden');
+	// defuse_timer_bar.classList.add('hidden');
+
+	if (s.bomb?.state == 'planted' && s.round?.phase !== 'over')
 	{
-		round_phase = new_phase;
-		remaining_time = new_time;
+		const time_left = parseFloat(s.phase_countdowns?.phase_ends_in || 0);
+		const percent = Math.max(0, Math.min(100, (time_left / 40) * 100));
+		bomb_timer_bar.style.width = `${percent}%`;
+		bomb_timer_bar.style.opacity = `1`;
 	}
-	// if (round_phase === null || last_phase_start === null || new_phase !== round_phase)
-	// {
-	// 	if (phase_time === 0 && ['live', 'bomb', 'defuse'].includes(new_phase))
-	// 	{
-	// 		console.warn(`Skipping timer initialization: phase = '${new_phase}' and phase_time = 0`);
-	// 		return;
-	// 	}
-
-	// 	round_phase = new_phase;
-	// 	last_phase_time = phase_time;
-	// 	last_phase_start = (server_time - phase_time);
-	// 	console.log(`Phase initialized/changed to: ${round_phase} at ${new Date(last_phase_start).toISOString()} (phase_time = ${phase_time})`);
-	// }
-	// last_phase_time = s.round?.phase_time || 0;
-
-	if (s.bomb?.state === 'planting')
+	else
 	{
-		const is_local_player = s.bomb?.player.toString() === s.player?.steamid;
-		const planter = is_local_player ? 'You' : s.allplayers?.[s.bomb?.player]?.name || 'Unknown';
-		on_bomb_plant(planter);
+		bomb_timer_bar.style.opacity = `0`;
 	}
+
+	const bomb_state = s.bomb?.state;
+
+	if (bomb_state === 'defusing' && last_bomb_state !== 'defusing')
+	{
+		defuse_start_time = Date.now();
+		last_has_kit = !!s.bomb?.haskit;
+	}
+
+	if (bomb_state === 'defusing' && defuse_start_time)
+	{
+		const defuse_duration = last_has_kit ? 5000 : 10000;
+		const elapsed = Date.now() - defuse_start_time;
+
+		const remaining = Math.max(0, defuse_duration - elapsed);
+		const percent = (1- remaining / defuse_duration) * 100;
+		// defuse_timer_bar.classList.remove('hidden');
+		defuse_timer_bar.style.width = `${percent}%`;
+		defuse_timer_bar.style.opacity = `1`;
+
+		if (remaining <= 0)
+		{
+			// defuse_timer_bar.classList.add('hidden');
+			defuse_timer_bar.style.opacity = `0`;
+			defuse_start_time = null;
+		}
+	}
+	else
+	{
+		if (bomb_state !== 'defusing')
+		{
+			defuse_start_time = null;
+			// defuse_timer_bar.classList.add('hidden');
+			defuse_timer_bar.style.opacity = `0`;
+		}
+	}
+
+	last_bomb_state = bomb_state
 
 	const alive_ct = t_L.filter(p => p.state.health > 0).length;
 	const alive_t = t_R.filter(p => p.state.health > 0).length;
@@ -321,127 +348,6 @@ function format_time(sec)
 	const m = Math.floor(s / 60), r = s % 60;
 	return `${m}:${r.toString().padStart(2, '0')}`;
 }
-
-// let current_defuse = null;
-// let current_plant = null;
-// let current_bomb_timer = null;
-
-// function show_progress({
-// 	type = 'defuse',
-// 	player = '',
-// 	label_text = '',
-// 	time,
-// 	color = '#6ab3e8',
-// 	onComplete = () => {}
-// })
-// {
-// 	const container = document.querySelector(`.middle-bar-${type}`);
-// 	const label = document.querySelector('.label');
-// 	const progress = document.querySelector('.progress');
-// 	const timer = document.querySelector('.timer');
-
-// 	container.style.transform = 'translateY(0)';
-// 	progress.style.transition = 'none';
-// 	progress.style.width = '0%';
-// 	void progress.offsetWidth;
-
-// 	label.textContent = label_text.replace('{player}', player);
-// 	progress.style.backgroundColor = color;
-// 	progress.style.transition = `width ${time}s linear`;
-
-// 	let start = Date.now();
-
-// 	let interval = setInterval(() => {
-// 		let elapsed = (Date.now() - start) / 1000;
-// 		let remaining = Math.max(0, time - elapsed);
-// 		let percent = (elapsed / time) * 100;
-
-// 		progress.style.width = `${Math.min(100, percent)}%`;
-// 		timer.textContent = `${remaining.toFixed(1)}s`;
-
-// 		if (elapsed >= time)
-// 		{
-// 			clearInterval(interval);
-// 			container.style.transform = 'translateY(-100%)';
-// 			onComplete();
-// 		}
-// 	}, 100);
-
-// 	return () => {
-// 		clearInterval(interval);
-// 		container.style.transform = 'translateY(-100%)';
-// 	};
-// }
-
-// function on_bomb_plant(player)
-// {
-// 	if (current_plant) current_plant();
-
-// 	current_plant = show_progress({
-// 		type: 'bombplant',
-// 		player,
-// 		label_text: '{player} is planting the bomb',
-// 		time: 3,
-// 		color: '#eca766',
-// 		onComplete: () => {
-// 			current_plant = null;
-// 			on_bomb_planted();
-// 		}
-// 	});
-// }
-
-// function on_defuse(player, kit = false)
-// {
-// 	if (current_defuse) current_defuse();
-
-// 	const time = kit ? 5 : 10;
-
-// 	current_defuse = show_progress({
-// 		type: 'defuse',
-// 		player,
-// 		label_text: '{player} is defusing',
-// 		time: time,
-// 		color: '#6ab3e8',
-// 		onComplete: () => {
-// 			current_defuse = null;
-// 		}
-// 	});
-// }
-
-// function cancel_defuse()
-// {
-// 	if (current_defuse)
-// 	{
-// 		current_defuse();
-// 		current_defuse = null;
-// 	}
-// }
-
-// function cancel_bomb_plant()
-// {
-// 	if (current_plant)
-// 	{
-// 		current_plant();
-// 		current_plant = null;
-// 	}
-// }
-
-// function on_bomb_planted()
-// {
-// 	if (current_bomb_timer) current_bomb_timer();
-
-// 	current_bomb_timer = show_progress({
-// 		type: 'bomb',
-// 		player,
-// 		label_text: 'Bomb planted',
-// 		time: 40,
-// 		color: '#ff2c2c',
-// 		onComplete: () => {
-// 			current_plant = null;
-// 			on_bomb_planted();
-// 		}
-// 	});
-// }
 
 setInterval(() => {
 	if (!isNaN(remaining_time))
