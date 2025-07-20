@@ -26,82 +26,32 @@
 			<div class="groups">
 				<div class="group hidden">
 					<div class="group-title">Grupa A</div>
-					<table class="group-table">
-						<tr>
-							<th>&nbsp;</th>
-							<th>W</th>
-							<th>D</th>
-							<th>L</th>
-							<th>PTS</th>
-						</tr>
-						<tr>
-							<td>Pest E-sport</td>
-							<td>3</td>
-							<td>0</td>
-							<td>0</td>
-							<td>9</td>
-						</tr>
-						<tr>
-							<td>Militi</td>
-							<td>1</td>
-							<td>0</td>
-							<td>1</td>
-							<td>3</td>
-						</tr>
-						<tr>
-							<td>Technopol</td>
-							<td>1</td>
-							<td>0</td>
-							<td>1</td>
-							<td>3</td>
-						</tr>
-						<tr>
-							<td>Office365</td>
-							<td>0</td>
-							<td>0</td>
-							<td>3</td>
-							<td>0</td>
-						</tr>
+					<table class="group-table" id="group-table-a">
+						<thead>
+							<tr>
+								<th>&nbsp;</th>
+								<th>W</th>
+								<th>D</th>
+								<th>L</th>
+								<th>PTS</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
 					</table>
 				</div>
 				<div class="group hidden">
 					<div class="group-title">Grupa B</div>
-					<table class="group-table">
-						<tr>
-							<th>&nbsp;</th>
-							<th>W</th>
-							<th>D</th>
-							<th>L</th>
-							<th>PTS</th>
-						</tr>
-						<tr>
-							<td>Pest E-sport</td>
-							<td>3</td>
-							<td>0</td>
-							<td>0</td>
-							<td>9</td>
-						</tr>
-						<tr>
-							<td>Militi</td>
-							<td>1</td>
-							<td>0</td>
-							<td>1</td>
-							<td>3</td>
-						</tr>
-						<tr>
-							<td>Technopol</td>
-							<td>0</td>
-							<td>1</td>
-							<td>1</td>
-							<td>1</td>
-						</tr>
-						<tr>
-							<td>Office365</td>
-							<td>0</td>
-							<td>1</td>
-							<td>2</td>
-							<td>1</td>
-						</tr>
+					<table class="group-table" id="group-table-b">
+						<thead>
+							<tr>
+								<th>&nbsp;</th>
+								<th>W</th>
+								<th>D</th>
+								<th>L</th>
+								<th>PTS</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
 					</table>
 				</div>
 			</div>
@@ -109,6 +59,7 @@
 	</main>
 
 	<script>
+		const ws = new WebSocket('ws://localhost:41079');
 		const params = new URLSearchParams(window.location.search);
 
 		// ==================================
@@ -153,9 +104,10 @@
 			document.querySelector('#team-right-score').textContent = team_right.score;
 		}
 
+		const unhide_timeout = 1800;
+
 		window.addEventListener('DOMContentLoaded', () => {
 			setTimeout(() => {
-				// const match = document.querySelector('.match');
 				const unhide = document.querySelectorAll('.team, .team-score, .team-versus, .tournament-stage, .falcon-logo, .group');
 				unhide.forEach(elem => {
 					console.log(elem);
@@ -171,7 +123,7 @@
 						}
 					}
 				});
-			}, 2000);
+			}, unhide_timeout);
 		});
 	</script>
 </body>

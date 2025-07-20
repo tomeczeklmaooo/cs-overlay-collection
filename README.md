@@ -17,9 +17,7 @@ Add a browser source in OBS with the link you see in commandline (make sure cust
 Enjoy
 
 ## TODO
-- make weapons not hardcoded
 - show defuse kits
 - defuse countdown bar
 - bomb countdown bar
 - clutch box when 1vX
-- player positions on radar
