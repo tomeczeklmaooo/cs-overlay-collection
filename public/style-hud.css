@@ -326,7 +326,7 @@ body
 	pointer-events: none;
 }
 
-.production.hidden
+.hidden
 {
 	clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
 }

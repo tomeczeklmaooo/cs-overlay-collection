@@ -9,22 +9,30 @@
 <body>
 	<main>
 		<div class="left">
-			<img src="icons/FL.png" alt="FL6_FALCON_LOGO" class="falcon-logo hidden">
-			<div class="tournament-stage hidden">
+			<img src="icons/FL.png" alt="FL6_FALCON_LOGO" class="falcon-logo">
+			<div class="tournament-stage">
 				&nbsp;
 			</div>
 			<div class="match">
-				<div class="team hidden" id="team-left-name">&nbsp;</div>
-				<div class="team-score hidden" id="team-left-score">&nbsp;</div>
-				<div class="team-versus hidden">VS</div>
-				<div class="team-score hidden" id="team-right-score">&nbsp;</div>
-				<div class="team hidden" id="team-right-name">&nbsp;</div>
+				<div class="team">
+					<span class="inner-box-text" id="team-left-name">&nbsp;</span>
+				</div>
+				<div class="team-score">
+					<span class="inner-box-text" id="team-left-score">&nbsp;</span>
+				</div>
+				<div class="team-versus">VS</div>
+				<div class="team-score">
+					<span class="inner-box-text" id="team-right-score">&nbsp;</span>
+				</div>
+				<div class="team">
+					<span class="inner-box-text" id="team-right-name">&nbsp;</span>
+				</div>
 			</div>
 		</div>
 
 		<div class="right">
 			<div class="groups">
-				<div class="group hidden">
+				<div class="group">
 					<div class="group-title">Grupa A</div>
 					<table class="group-table" id="group-table-a">
 						<thead>
@@ -39,7 +47,7 @@
 						<tbody></tbody>
 					</table>
 				</div>
-				<div class="group hidden">
+				<div class="group">
 					<div class="group-title">Grupa B</div>
 					<table class="group-table" id="group-table-b">
 						<thead>
@@ -104,26 +112,34 @@
 			document.querySelector('#team-right-score').textContent = team_right.score;
 		}
 
-		const unhide_timeout = 1800;
+		const show_timeout = 1800;
 
 		window.addEventListener('DOMContentLoaded', () => {
 			setTimeout(() => {
-				const unhide = document.querySelectorAll('.team, .team-score, .team-versus, .tournament-stage, .falcon-logo, .group');
-				unhide.forEach(elem => {
+				const show = document.querySelectorAll('.team, .team-score, .team-versus, .tournament-stage, .falcon-logo, .group');
+				show.forEach(elem => {
 					console.log(elem);
 					if (show_scores)
 					{
-						elem.classList.remove('hidden');
+						elem.classList.add('show');
 					}
 					else
 					{
 						if (!elem.classList.contains('team-score'))
 						{
-							elem.classList.remove('hidden');
+							elem.classList.add('show');
 						}
 					}
 				});
-			}, unhide_timeout);
+			}, show_timeout);
+
+			setTimeout(() => {
+				const show = document.querySelectorAll('.inner-box-text');
+				show.forEach(elem => {
+					console.log(elem);
+					elem.classList.add('show');
+				});
+			}, show_timeout * 1.3);
 		});
 	</script>
 </body>
