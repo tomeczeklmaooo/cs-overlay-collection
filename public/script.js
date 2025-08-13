@@ -358,16 +358,3 @@ setInterval(() => {
 		if (timer) timer.textContent = text;
 	}
 }, 500);
-
-window.addEventListener('DOMContentLoaded', () => {
-	setTimeout(() => {
-		const prod = document.querySelector('.production');
-		if (prod)
-		{
-			prod.classList.remove('hidden');
-			setTimeout(() => {
-				prod.classList.add('hidden');
-			}, 5000);
-		}
-	}, 2500);
-});

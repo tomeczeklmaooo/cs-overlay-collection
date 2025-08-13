@@ -7,11 +7,32 @@ body
 	height: 100vh;
 	margin: 0;
 	background: transparent;
+	/* background: black; */
 	font-family: 'Staatliches', sans-serif;
 	flex-direction: row;
 	color: #080808;
 	user-select: none;
+	overflow: hidden;
 }
+
+/* .shader
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 25px;
+}
+
+.shader > .blob
+{
+	background: #2f0885;
+	width: 12.5%;
+	height: 25%;
+	border-radius: 100%;
+	filter: blur(15px);
+	position: absolute;
+} */
 
 #background-video
 {
@@ -28,6 +49,8 @@ main
 	height: 100vh;
 	display: flex;
 	flex-direction: row;
+	background-color: #080808a2;
+	backdrop-filter: blur(8px);
 }
 
 .left
@@ -35,11 +58,11 @@ main
 	width: 60%;
 	height: 100%;
 	display: flex;
-	background-color: #080808a2;
+	/* background-color: #080808a2; */
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	backdrop-filter: blur(8px);
+	/* backdrop-filter: blur(8px); */
 	color: #fefefe;
 	gap: 4px;
 }
@@ -123,11 +146,11 @@ main
 	width: 40%;
 	height: 100%;
 	display: flex;
-	background-color: #080808a2;
+	/* background-color: #080808a2; */
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	backdrop-filter: blur(8px);
+	/* backdrop-filter: blur(8px); */
 	color: #fefefe;
 	gap: 4px;
 }

@@ -73,7 +73,7 @@
 
 	<!-- MIDDLE PART -->
 	<div class="middle">
-		<div class="production hidden">
+		<div class="production">
 			<div class="production-title">
 				Produkcja
 			</div>
@@ -99,6 +99,20 @@
 		<div class="team-bottom" id="team-right"></div>
 	</div>
 
+	<script>
+		window.addEventListener('DOMContentLoaded', () => {
+			setTimeout(() => {
+				const prod = document.querySelector('.production');
+				if (prod)
+				{
+					prod.classList.add('show');
+					setTimeout(() => {
+						prod.classList.remove('show');
+					}, 5000);
+				}
+			}, 2500);
+		});
+	</script>
 	<script src="script.js"></script>
 </body>
 </html>
