@@ -148,19 +148,18 @@
 		const is_test_broadcast = params.has('test_broadcast');
 		const is_tech_pause = params.has('tech_pause');
 
-		if (is_test_broadcast)
+		if (is_test_broadcast || is_tech_pause)
 		{
 			document.querySelector('.left').style.width = '100%';
 			document.querySelector('.right').style.display = 'none';
-			document.querySelector('.tournament-stage').textContent = 'Transmisja testowa';
-			document.querySelector('.match').style.display = 'none';
-		}
-		else if (is_tech_pause)
-		{
-			document.querySelector('.left').style.width = '100%';
-			document.querySelector('.right').style.display = 'none';
-			document.querySelector('.tournament-stage').textContent = 'Przerwa techniczna';
-			document.querySelector('.match').style.display = 'none';
+			document.querySelector('.tournament-stage').style.display = 'none';
+			document.getElementsByClassName('team')[1].style.display = 'none';
+			document.getElementsByClassName('team-score')[0].style.display = 'none';
+			document.getElementsByClassName('team-score')[1].style.display = 'none';
+			document.querySelector('.team-versus').style.display = 'none';
+
+			if (is_test_broadcast) document.getElementById('team-left-name').innerHTML = 'Transmisja testowa';
+			if (is_tech_pause) document.getElementById('team-left-name').innerHTML = 'Przerwa techniczna';
 		}
 		else
 		{
