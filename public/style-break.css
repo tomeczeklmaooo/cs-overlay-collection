@@ -15,25 +15,6 @@ body
 	overflow: hidden;
 }
 
-/* .shader
-{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	gap: 25px;
-}
-
-.shader > .blob
-{
-	background: #2f0885;
-	width: 12.5%;
-	height: 25%;
-	border-radius: 100%;
-	filter: blur(15px);
-	position: absolute;
-} */
-
 #background-video
 {
 	position: fixed;
@@ -71,6 +52,8 @@ main
 {
 	width: 400px;
 	height: 400px;
+	/* width: 332px;
+	height: 268px; */
 	clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
 	transition: clip-path 0.5s ease;
 	pointer-events: none;

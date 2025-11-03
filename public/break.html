@@ -7,7 +7,6 @@
 	<link rel="stylesheet" href="style-break.css">
 </head>
 <body>
-	<!-- <div class="shader"></div> -->
 	<main>
 		<div class="left">
 			<img src="icons/FL.png" alt="FL6_FALCON_LOGO" class="falcon-logo">
@@ -67,64 +66,6 @@
 		</div>
 	</main>
 
-	<!-- ANIMATED BACKGROUND -->
-	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-	<script>
-		const rnd = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
-		const colors = ["#9f86fa", "#6064fc", "#1b59ff", "#0005f1", "#2f0885"];
-		const rndBorderRadius = () =>
-		[...Array(4).keys()].map((x) => rnd(30, 85) + "%").join(" ") +
-		" / " +
-		[...Array(4).keys()].map((x) => rnd(30, 85) + "%").join(" ");
-
-		const createBlob = ({ id, x, y, color }) => {
-			const card = document.querySelector(".shader");
-			const blob = document.createElement("div");
-			blob.id = `blob-${id}`;
-			blob.classList.add("blob");
-			blob.style.top = `${y}%`;
-			blob.style.left = `${x}%`;
-			blob.style.backgroundColor = color;
-			blob.style.scale = rnd(1.25, 2);
-			blob.style.borderRadius = rndBorderRadius();
-			card.appendChild(blob);
-			animateBlob(id);
-		};
-
-		const animateBlob = (id) => {
-			anime({
-				targets: `#blob-${id}`,
-				translateX: () => `+=${rnd(-25, 25)}`,
-				translateY: () => `+=${rnd(-25, 25)}`,
-				borderRadius: () => rndBorderRadius(),
-				rotate: () => rnd(-25, 25),
-				opacity: () => rnd(0.4, 0.8),
-				delay: () => rnd(0, 1000),
-				scale: () => rnd(1.25, 2),
-				// direction: 'alternate',
-				// loop: 1,
-				duration: 2000,
-				easing: "linear",
-				complete: (anim) => animateBlob(id)
-				// complete: anim => { anim.restart(); },
-			}).play();
-		};
-
-		const genBlobs = () => {
-			const card = document.querySelector(".shader");
-			card.innerHTML = "";
-			[...Array(25).keys()].map((id) => {
-				const x = rnd(25, 75);
-				const y = rnd(25, 75);
-				const color = colors[rnd(0, colors.length)];
-				createBlob({ x, y, color, id });
-			});
-		};
-
-		genBlobs();
-	</script> -->
-	<!-- END ANIMATED BACKGROUND -->
-
 	<script>
 		const ws = new WebSocket('ws://localhost:41079');
 		const params = new URLSearchParams(window.location.search);
@@ -138,7 +79,7 @@
 			score: 0
 		};
 		const team_right = {
-			name: 'MiVORI',
+			name: 'womp womp gaming',
 			score: 0
 		};
 		// CZY POKAZAĆ WYNIK MECZU
@@ -147,6 +88,7 @@
 		// RODZAJ ZAWARTOŚCI
 		const is_test_broadcast = params.has('test_broadcast');
 		const is_tech_pause = params.has('tech_pause');
+		const is_zsttp = params.has('zsttp');
 
 		if (is_test_broadcast || is_tech_pause)
 		{
@@ -160,6 +102,17 @@
 
 			if (is_test_broadcast) document.getElementById('team-left-name').innerHTML = 'Transmisja testowa';
 			if (is_tech_pause) document.getElementById('team-left-name').innerHTML = 'Przerwa techniczna';
+		}
+		else if (is_zsttp)
+		{
+			document.querySelector('.left').style.width = '100%';
+			document.querySelector('.right').style.display = 'none';
+			document.querySelector('.falcon-logo').src = "icons/zst.png";
+			document.querySelector('.tournament-stage').textContent = "Szkolny Turniej CS2";
+			document.querySelector('#team-left-name').textContent = team_left.name;
+			document.querySelector('#team-left-score').textContent = team_left.score;
+			document.querySelector('#team-right-name').textContent = team_right.name;
+			document.querySelector('#team-right-score').textContent = team_right.score;
 		}
 		else
 		{
