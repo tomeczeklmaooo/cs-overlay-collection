@@ -88,13 +88,18 @@
 		// RODZAJ ZAWARTOŚCI
 		const is_test_broadcast = params.has('test_broadcast');
 		const is_tech_pause = params.has('tech_pause');
+		const is_stream_end = params.has('stream_end');
 		const is_zsttp = params.has('zsttp');
 
-		if (is_test_broadcast || is_tech_pause)
+		if (team_left.name.length > 20) document.getElementById('team-left-name').style.fontSize = '26pt';
+		if (team_right.name.length > 20) document.getElementById('team-right-name').style.fontSize = '26pt';
+
+		if (is_test_broadcast || is_tech_pause || is_stream_end) // cokolwiek co tylko jeden pasek z tekstem jest potrzebny
 		{
 			document.querySelector('.left').style.width = '100%';
 			document.querySelector('.right').style.display = 'none';
 			document.querySelector('.tournament-stage').style.display = 'none';
+			if (is_zsttp) document.querySelector('.falcon-logo').src = "icons/zst.png";
 			document.getElementsByClassName('team')[1].style.display = 'none';
 			document.getElementsByClassName('team-score')[0].style.display = 'none';
 			document.getElementsByClassName('team-score')[1].style.display = 'none';
@@ -102,19 +107,20 @@
 
 			if (is_test_broadcast) document.getElementById('team-left-name').innerHTML = 'Transmisja testowa';
 			if (is_tech_pause) document.getElementById('team-left-name').innerHTML = 'Przerwa techniczna';
+			if (is_stream_end) document.getElementById('team-left-name').innerHTML = 'Dziękujemy za oglądanie!';
 		}
-		else if (is_zsttp)
+		else if (is_zsttp) // tylko na turniej szkolny 
 		{
 			document.querySelector('.left').style.width = '100%';
 			document.querySelector('.right').style.display = 'none';
 			document.querySelector('.falcon-logo').src = "icons/zst.png";
-			document.querySelector('.tournament-stage').textContent = "Szkolny Turniej CS2";
+			document.querySelector('.tournament-stage').innerHTML = "1/8 finału";
 			document.querySelector('#team-left-name').textContent = team_left.name;
 			document.querySelector('#team-left-score').textContent = team_left.score;
 			document.querySelector('#team-right-name').textContent = team_right.name;
 			document.querySelector('#team-right-score').textContent = team_right.score;
 		}
-		else
+		else // jak żadnych parametrów nie będzie
 		{
 			document.querySelector('.tournament-stage').textContent = tournament_stage;
 			document.querySelector('#team-left-name').textContent = team_left.name;
