@@ -124,6 +124,45 @@ main
 	width: 50px;
 }
 
+.maps
+{
+	display: flex;
+	gap: 8px;
+	justify-content: space-between;
+	width: 1022px; /* hardcoded for 1080p */
+	box-sizing: border-box;
+}
+
+.map
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background-color: #fefefe;
+	color: #080808;
+	flex: 1;
+	height: 30px;
+	box-sizing: border-box;
+	font-size: 18pt;
+	clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+	transition: clip-path 0.5s ease;
+}
+
+.map-score
+{
+	background-color: #080808;
+	color: #fefefe;
+	height: 100%;
+	width: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 16px;
+	clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+	transition: clip-path 1s ease;
+}
+
 .right
 {
 	width: 40%;

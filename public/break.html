@@ -28,6 +28,7 @@
 					<span class="inner-box-text" id="team-right-name">&nbsp;</span>
 				</div>
 			</div>
+			<div class="maps"></div>
 		</div>
 
 		<div class="right">
@@ -74,28 +75,38 @@
 		// ZMIENNE KONFIGURACYJNE
 		// ==================================
 		const tournament_stage = 'Faza Grupowa';
+
+		const map_config = [
+			{ map: 'mapname', score_left: 0, score_right: 0 },
+			{ map: 'mapname', score_left: 0, score_right: 0 },
+			{ map: 'mapname', score_left: 0, score_right: 0 },
+		];
+
 		const team_left = {
-			name: 'Team Solid',
+			name: 'team_left',
 			score: 0
 		};
 		const team_right = {
-			name: 'womp womp gaming',
+			name: 'team_right',
 			score: 0
 		};
 		// CZY POKAZAĆ WYNIK MECZU
 		const show_scores = true;
+		const show_maps = true;
 
 		// RODZAJ ZAWARTOŚCI
 		const is_test_broadcast = params.has('test_broadcast');
 		const is_tech_pause = params.has('tech_pause');
 		const is_stream_end = params.has('stream_end');
 		const is_zsttp = params.has('zsttp');
+		const is_prod = params.has('prod');
 
-		if (team_left.name.length > 20) document.getElementById('team-left-name').style.fontSize = '26pt';
-		if (team_right.name.length > 20) document.getElementById('team-right-name').style.fontSize = '26pt';
+		if (team_left.name.length > 20) document.getElementById('team-left-name').style.fontSize = '24pt';
+		if (team_right.name.length > 20) document.getElementById('team-right-name').style.fontSize = '24pt';
 
-		if (is_test_broadcast || is_tech_pause || is_stream_end) // cokolwiek co tylko jeden pasek z tekstem jest potrzebny
+		if (is_test_broadcast || is_tech_pause || is_stream_end || is_prod) // cokolwiek co tylko jeden pasek z tekstem jest potrzebny
 		{
+			document.querySelector('.maps').style.display = 'none';
 			document.querySelector('.left').style.width = '100%';
 			document.querySelector('.right').style.display = 'none';
 			document.querySelector('.tournament-stage').style.display = 'none';
@@ -108,13 +119,23 @@
 			if (is_test_broadcast) document.getElementById('team-left-name').innerHTML = 'Transmisja testowa';
 			if (is_tech_pause) document.getElementById('team-left-name').innerHTML = 'Przerwa techniczna';
 			if (is_stream_end) document.getElementById('team-left-name').innerHTML = 'Dziękujemy za oglądanie!';
+			if (is_prod)
+			{
+				document.querySelector('.falcon-logo').style.display = 'none';
+				document.querySelector('.tournament-stage').style.display = 'flex';
+				document.querySelector('.tournament-stage').style.fontSize = '28pt';
+				document.querySelector('.tournament-stage').innerHTML = 'produkcja';
+				document.querySelector('.match').style.marginTop = '0';
+				document.getElementById('team-left-name').style.fontSize = '24pt';
+				document.getElementById('team-left-name').innerHTML = 'toaster esports entertainment';
+			}
 		}
 		else if (is_zsttp) // tylko na turniej szkolny 
 		{
 			document.querySelector('.left').style.width = '100%';
 			document.querySelector('.right').style.display = 'none';
 			document.querySelector('.falcon-logo').src = "icons/zst.png";
-			document.querySelector('.tournament-stage').innerHTML = "1/8 finału";
+			document.querySelector('.tournament-stage').innerHTML = "Wielki finał";
 			document.querySelector('#team-left-name').textContent = team_left.name;
 			document.querySelector('#team-left-score').textContent = team_left.score;
 			document.querySelector('#team-right-name').textContent = team_right.name;
@@ -129,11 +150,32 @@
 			document.querySelector('#team-right-score').textContent = team_right.score;
 		}
 
+		// to akurat zawsze ma być sprawdzane
+		if (show_maps)
+		{
+			for (let i = 0; i < map_config.length; i++)
+			{
+				document.querySelector('.maps').innerHTML += `
+				<div class="map">
+					<div class="map-score">
+						<span class="inner-box-text">${map_config[i].score_left}</span>
+					</div>
+					<div class="map-name">
+						<span class="inner-box-text">${map_config[i].map}</span>
+					</div>
+					<div class="map-score">
+						<span class="inner-box-text">${map_config[i].score_right}</span>
+					</div>
+				</div>
+				`;
+			}
+		}
+
 		const show_timeout = 1800;
 
 		window.addEventListener('DOMContentLoaded', () => {
 			setTimeout(() => {
-				const show = document.querySelectorAll('.team, .team-score, .team-versus, .tournament-stage, .falcon-logo, .group');
+				const show = document.querySelectorAll('.team, .team-score, .team-versus, .tournament-stage, .falcon-logo, .group, .map, .map-score');
 				show.forEach(elem => {
 					console.log(elem);
 					if (show_scores)
@@ -143,6 +185,18 @@
 					else
 					{
 						if (!elem.classList.contains('team-score'))
+						{
+							elem.classList.add('show');
+						}
+					}
+
+					if (show_maps)
+					{
+						elem.classList.add('show');
+					}
+					else
+					{
+						if (!elem.classList.contains('map'))
 						{
 							elem.classList.add('show');
 						}
